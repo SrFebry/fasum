@@ -13,7 +13,12 @@
           "package_name": "com.example.fasum"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "908160509388-jdq9rr5488vvifaf12rd5p8bi9j9pogo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCEBHeqY3A2KXbe5mu_lKICi5R1AjMqVpY"
@@ -21,7 +26,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "908160509388-jdq9rr5488vvifaf12rd5p8bi9j9pogo.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "908160509388-9d1oqo5ceqglmrg9qrho6ev74co30nak.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.fasum.RunnerTests"
+              }
+            }
+          ]
         }
       }
     }

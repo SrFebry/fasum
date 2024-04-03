@@ -6,6 +6,7 @@ class SignUpScreen extends StatefulWidget {
   @override
   SignUpScreenState createState() => SignUpScreenState();
 }
+
 class SignUpScreenState extends State<SignUpScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
