@@ -80,37 +80,6 @@ class SignInScreenState extends State<SignInScreen> {
               const SizedBox(height: 16.0),
               ElevatedButton(
                 onPressed: () async {
-                  try {
-                    await FirebaseAuth.instance.signInWithEmailAndPassword(
-                      email: _emailController.text,
-                      password: _passwordController.text,
-                    );
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(
-                          builder: (context) => const HomeScreen()),
-                    );
-                  } catch (error) {
-                    setState(() {
-                      _errorMessage = error.toString();
-                    });
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(_errorMessage),
-                      ),
-                    );
-                  }
-                },
-                child: const Text('Sign In'),
-              ),
-              const SizedBox(height: 16.0),
-              ElevatedButton.icon(
-                  onPressed: _signInWIthGoogle,
-                  icon: Image.asset('assets/images/icongoogle.png'),
-                  label: const Text(
-                    'Sign In with Google',
-                  )),
-              ElevatedButton(
-                onPressed: () async {
                   final email = _emailController.text.trim();
                   final password = _passwordController.text;
                   // Validasi email
@@ -177,7 +146,7 @@ class SignInScreenState extends State<SignInScreen> {
                     );
                   }
                 },
-                child: const Text(''),
+                child: const Text('Sign In'),
               ),
               const SizedBox(height: 32.0),
               TextButton(
@@ -190,6 +159,14 @@ class SignInScreenState extends State<SignInScreen> {
                 },
                 child: const Text('Don\'t have an account? Sign up'),
               ),
+              const SizedBox(height: 32.0),
+              ElevatedButton.icon(
+                  onPressed: _signInWIthGoogle,
+                  icon: Image.asset('assets/images/icongoogle.png'),
+                  label: const Text(
+                    'Sign In with Google',
+                  )),
+              const SizedBox(height: 16.0),
             ],
           ),
         ),
