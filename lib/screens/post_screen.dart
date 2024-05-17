@@ -4,6 +4,7 @@ import 'package:fasum/screens/home_screen.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class PostScreen extends StatefulWidget {
   @override
@@ -13,6 +14,7 @@ class PostScreen extends StatefulWidget {
 class _AddPostScreenState extends State<PostScreen> {
   final _TextController = TextEditingController();
   final ImagePicker _picker = ImagePicker();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   XFile? _image;
 
   @override
@@ -51,7 +53,7 @@ class _AddPostScreenState extends State<PostScreen> {
             TextField(
               controller: _TextController,
               decoration: InputDecoration(
-                hintText: 'Input Text',
+                hintText: 'Input Deskripsi',
                 border: OutlineInputBorder(),
               ),
             ),
@@ -85,9 +87,10 @@ class _AddPostScreenState extends State<PostScreen> {
                   final CollectionReference posts =
                       FirebaseFirestore.instance.collection('test');
                   await posts.add({
-                    'text': _TextController.text,
+                    'deskripsi': _TextController.text,
                     'image_url': downloadUrl,
                     'timestamp': Timestamp.now(),
+                    'user_email': _auth.currentUser?.email,
                   });
 
                   ScaffoldMessenger.of(context).showSnackBar(
