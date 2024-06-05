@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fasum/screens/detail_screen.dart';
 import 'package:fasum/screens/post_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -53,30 +54,47 @@ class _HomeScreenState extends State<HomeScreen> {
                 itemBuilder: (context, index) {
                   DocumentSnapshot documentSnapshot =
                       snapshot.data!.docs[index];
-                  return Card(
-                    child: ListTile(
-                      title: Text(
-                        'Deskripsi : ${documentSnapshot['deskripsi']}',
-                      ),
-                      leading: Container(
-                        width: 50,
-                        height: 50,
-                        child: Image.network(
-                          documentSnapshot['image_url'],
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      subtitle: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(DateFormat.yMMMd().add_jm().format(
-                                documentSnapshot['timestamp'].toDate(),
-                              )),
-                          Text(
-                            'Posted by: ${_auth.currentUser?.email == documentSnapshot['user_email'] ? _auth.currentUser?.email ?? 'Unknown' : documentSnapshot['user_email']}',
-                            style: const TextStyle(fontSize: 18),
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => DetailScreen(
+                            documentId: documentSnapshot.id,
+                            imageUrl: documentSnapshot['image_url'],
+                            description: documentSnapshot['deskripsi'],
+                            timestamp: documentSnapshot['timestamp'],
+                            userEmail: documentSnapshot['user_email'],
+                            latitude: documentSnapshot['latitude'],
+                            longitude: documentSnapshot['longitude'],
                           ),
-                        ],
+                        ),
+                      );
+                    },
+                    child: Card(
+                      child: ListTile(
+                        title: Text(
+                          'Deskripsi : ${documentSnapshot['deskripsi']}',
+                        ),
+                        leading: Container(
+                          width: 50,
+                          height: 50,
+                          child: Image.network(
+                            documentSnapshot['image_url'],
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(DateFormat.yMMMd().add_jm().format(
+                                  documentSnapshot['timestamp'].toDate(),
+                                )),
+                            Text(
+                              'Posted by: ${_auth.currentUser?.email == documentSnapshot['user_email'] ? _auth.currentUser?.email ?? 'Unknown' : documentSnapshot['user_email']}',
+                              style: const TextStyle(fontSize: 18),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   );
