@@ -212,6 +212,7 @@ class _LocationWidgetState extends State<LocationWidget> {
   Future<void> _getCurrentLocation() async {
     try {
       final position = await Geolocator.getCurrentPosition(
+        forceAndroidLocationManager: true,
         desiredAccuracy: LocationAccuracy.high,
       );
       setState(() {

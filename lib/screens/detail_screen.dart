@@ -74,7 +74,7 @@ class DetailScreen extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 16,
                           ),
-                          overflow: TextOverflow.ellipsis,
+                          overflow: TextOverflow.visible,
                         ),
                       ),
                     ],
@@ -89,26 +89,16 @@ class DetailScreen extends StatelessWidget {
   }
 
   static void _openMaps(double latitude, double longitude) async {
-    String mapsUrl;
-    if (Platform.isIOS) {
-      mapsUrl = 'comgooglemaps://?q=$latitude,$longitude';
-    } else {
-      mapsUrl = 'geo:$latitude,$longitude';
-    }
+    String mapsUrl =
+        'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
     try {
       if (await canLaunch(mapsUrl)) {
         await launch(mapsUrl);
       } else {
-        mapsUrl =
-            'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
-        if (await canLaunch(mapsUrl)) {
-          await launch(mapsUrl);
-        } else {
-          throw 'Could not launch $mapsUrl';
-        }
+        throw 'Could not launch $mapsUrl';
       }
     } catch (e) {
-      print('Error opening maps: $e');
+      print('Error: $e');
     }
   }
 }
