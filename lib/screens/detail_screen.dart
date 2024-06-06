@@ -26,48 +26,68 @@ class DetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('Detail'),
+        title: Text('Detail Screen'),
       ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.network(
-              imageUrl,
-              fit: BoxFit.cover,
-              height: 200,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Deskripsi: $description',
-                    style: TextStyle(fontSize: 18),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 8.0),
+                    child: Row(
+                      children: [
+                        CircleAvatar(
+                          // Assuming you have a profile image for the user
+                          radius: 20,
+                          // Change the image provider to your user's profile image
+                          backgroundImage: NetworkImage(
+                            'https://via.placeholder.com/150',
+                          ),
+                        ),
+                        SizedBox(width: 8.0),
+                        Text(
+                          userEmail,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16.0,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  SizedBox(height: 16),
-                  Text(
-                    'Timestamp: ${DateFormat.yMMMd().add_jm().format(timestamp.toDate())}',
-                    style: TextStyle(fontSize: 16),
+                  SizedBox(height: 8.0),
+                  Image.network(
+                    imageUrl,
+                    fit: BoxFit.fill,
+                    width: screenWidth,
+                    height: screenWidth * 0.6, // Aspect ratio
                   ),
-                  SizedBox(height: 16),
-                  Text(
-                    'Posted by: $userEmail',
-                    style: TextStyle(fontSize: 16),
+                  SizedBox(height: 8.0),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Text(
+                      description,
+                      style: TextStyle(fontSize: 16.0),
+                    ),
                   ),
-                  SizedBox(height: 16),
+                  SizedBox(height: 8.0),
                   Row(
                     children: [
-                      ElevatedButton(
+                      IconButton(
                         onPressed: () {
                           _openMaps(latitude, longitude);
                         },
-                        child: Text('Open Maps'),
+                        icon: Icon(Icons.location_on),
                       ),
-                      SizedBox(width: 16),
                       Expanded(
                         child: Text(
                           'Latitude: $latitude, Longitude: $longitude',
@@ -78,6 +98,11 @@ class DetailScreen extends StatelessWidget {
                         ),
                       ),
                     ],
+                  ),
+                  SizedBox(height: 8.0),
+                  Text(
+                    'Timestamp: ${DateFormat.yMMMd().add_jm().format(timestamp.toDate())}',
+                    style: TextStyle(fontSize: 14.0, color: Colors.grey),
                   ),
                 ],
               ),
