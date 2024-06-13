@@ -9,6 +9,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geolocator_android/geolocator_android.dart';
 import 'package:geolocator_apple/geolocator_apple.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 class PostScreen extends StatefulWidget {
   @override
@@ -19,6 +20,7 @@ class _AddPostScreenState extends State<PostScreen> {
   final _TextController = TextEditingController();
   final ImagePicker _picker = ImagePicker();
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
   XFile? _image;
   String _locationMessage = "";
   Position? _currentPosition;
@@ -105,6 +107,8 @@ class _AddPostScreenState extends State<PostScreen> {
                         .putFile(File(_image!.path));
                     final downloadUrl = await uploadTask.ref.getDownloadURL();
 
+                    String? Token = await _firebaseMessaging.getToken();
+
                     // Add Firebase Cloud Firestore functionality here
                     final CollectionReference posts =
                         FirebaseFirestore.instance.collection('test');
@@ -115,6 +119,7 @@ class _AddPostScreenState extends State<PostScreen> {
                       'user_email': _auth.currentUser?.email,
                       'latitude': _currentPosition!.latitude,
                       'longitude': _currentPosition!.longitude,
+                      'user_token': Token,
                     });
 
                     ScaffoldMessenger.of(context).showSnackBar(
